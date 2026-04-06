@@ -21,9 +21,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.util.SocketUtils;
+import org.springframework.test.util.TestSocketUtils;
 
 import com.ericsson.ei.exception.AuthenticationException;
 import com.ericsson.ei.exception.MongoDBConnectionException;
@@ -52,6 +52,7 @@ import io.cucumber.java.en.When;
         "aggregations.collection.ttl: 1",
         "notification.retry: 1",
         "spring.data.mongodb.database: TestTTLSteps",
+        "spring.mongodb.database: TestTTLSteps",
         "failed.notifications.collection.name: TestTTLSteps-failedNotifications",
         "rabbitmq.exchange.name: TestTTLSteps-exchange",
         "rabbitmq.queue.suffix: TestTTLSteps",
@@ -227,7 +228,7 @@ public class TestTTLSteps extends FunctionalTestBase {
      * to trigger retries of POST request
      */
     private void setUpMockServer() {
-        int port = SocketUtils.findAvailableTcpPort();
+        int port = TestSocketUtils.findAvailableTcpPort();
         clientAndServer = ClientAndServer.startClientAndServer(port);
         LOGGER.debug("Setting up mockServerClient with port " + port);
         mockServerClient = new MockServerClient(BASE_URL, port);

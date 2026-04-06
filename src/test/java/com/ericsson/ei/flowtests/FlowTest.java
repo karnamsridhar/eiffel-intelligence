@@ -63,6 +63,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 @TestPropertySource(properties = {
         "rules.path: src/test/resources/ArtifactRules.json",
         "spring.data.mongodb.database: FlowTest",
+        "spring.mongodb.database: FlowTest",
         "failed.notifications.collection.name: FlowTest-failedNotifications",
         "rabbitmq.exchange.name: FlowTest-exchange",
         "rabbitmq.queue.suffix: FlowTest" })

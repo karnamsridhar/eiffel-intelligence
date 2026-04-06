@@ -73,6 +73,7 @@ import com.rabbitmq.client.Channel;
 @TestPropertySource(properties = {
         "rules.path: src/test/resources/ArtifactRules.json",
         "spring.data.mongodb.database: TrafficGeneratedTest",
+        "spring.mongodb.database: TrafficGeneratedTest",
         "failed.notifications.collection.name: TrafficGeneratedTest-failedNotifications",
         "rabbitmq.exchange.name: TrafficGeneratedTest-exchange",
         "rabbitmq.queue.suffix: TrafficGeneratedTest"  })

@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -36,6 +36,7 @@ import com.ericsson.ei.utils.TestContextInitializer;
 
 @TestPropertySource(properties = {
         "spring.data.mongodb.database: TestProcessQueryParams",
+        "spring.mongodb.database: TestProcessQueryParams",
         "failed.notifications.collection.name: QueryServiceRESTAPITest-failedNotifications",
         "rabbitmq.exchange.name: TestProcessQueryParams-exchange",
         "rabbitmq.queue.suffix: TestProcessQueryParams" })
@@ -56,10 +57,10 @@ public class TestProcessQueryParams {
     @Autowired
     private ProcessQueryParams processQueryParams;
 
-    @MockBean
+    @MockitoBean
     private ProcessAggregatedObject processAggregatedObject;
     
-    @MockBean
+    @MockitoBean
     private Encryptor encryptor;
 
     @BeforeClass

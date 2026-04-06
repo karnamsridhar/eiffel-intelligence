@@ -18,8 +18,8 @@ package com.ericsson.ei.notifications;
 
 import java.text.ParseException;
 
-import javax.annotation.PostConstruct;
-import javax.mail.internet.MimeMessage;
+import jakarta.annotation.PostConstruct;
+import jakarta.mail.internet.MimeMessage;
 
 import com.ericsson.ei.mongo.MongoConstants;
 import org.jasypt.exceptions.EncryptionOperationNotPossibleException;

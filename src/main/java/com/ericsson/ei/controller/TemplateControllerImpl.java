@@ -18,10 +18,8 @@ package com.ericsson.ei.controller;
 
 import java.io.InputStream;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Api;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -35,14 +33,12 @@ import com.ericsson.ei.utils.ResponseMessage;
 
 @Component
 @CrossOrigin
-@Api(tags = {"Templates"}, description = "Templates of rules, Eiffel events and subscriptions")
 public class TemplateControllerImpl implements TemplateController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(
             TemplateControllerImpl.class);
 
     @Override
-    @ApiOperation(value = "Retrieve REST endpoints for downloading templates", tags = {"Templates"})
     public ResponseEntity<?> getTemplates(final HttpServletRequest httpRequest) {
         try {
             JSONObject response = new JSONObject();
@@ -59,7 +55,6 @@ public class TemplateControllerImpl implements TemplateController {
     }
 
     @Override
-    @ApiOperation(value = "Download subscription template", tags = {"Templates"})
     public ResponseEntity<?> getTemplatesSubscriptions(final HttpServletRequest httpRequest) {
         try {
             InputStream is = getClass().getResourceAsStream(
@@ -79,7 +74,6 @@ public class TemplateControllerImpl implements TemplateController {
     }
 
     @Override
-    @ApiOperation(value = "Download rules template", tags = {"Templates"})
     public ResponseEntity<?> getTemplatesRules(final HttpServletRequest httpRequest) {
         try {
             InputStream is = getClass().getResourceAsStream(
@@ -99,7 +93,6 @@ public class TemplateControllerImpl implements TemplateController {
     }
 
     @Override
-    @ApiOperation(value = "Download Eiffel events template", tags = {"Templates"})
     public ResponseEntity<?> getTemplatesEvents(final HttpServletRequest httpRequest) {
         try {
             InputStream is = getClass().getResourceAsStream(

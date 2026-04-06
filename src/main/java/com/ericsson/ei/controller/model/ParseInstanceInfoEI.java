@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.util.SocketUtils;
+import org.springframework.test.util.TestSocketUtils;
 
 import com.ericsson.ei.handlers.EventHandler;
 import com.ericsson.ei.handlers.RMQHandler;
@@ -44,6 +44,7 @@ import io.cucumber.java.en.When;
 @Ignore
 @TestPropertySource(properties = {
         "spring.data.mongodb.database: RabbitMQTestConnectionSteps",
+        "spring.mongodb.database: RabbitMQTestConnectionSteps",
         "bindingkeys.collection.name: RabbitMQConfigurationTestSteps-bindingKeys",
         "failed.notifications.collection.name: RabbitMQTestConnectionSteps-failedNotifications",
         "rabbitmq.exchange.name: RabbitMQTestConnectionSteps-exchange",
@@ -80,7 +81,7 @@ public class RabbitMQTestConnectionSteps extends FunctionalTestBase {
 
     @Given("^We are connected to message bus$")
     public void connect_to_message_bus() throws Exception {
-        int port = SocketUtils.findAvailableTcpPort();
+        int port = TestSocketUtils.findAvailableTcpPort();
         String config = "src/functionaltests/resources/configs/qpidConfig.json";
         File qpidConfig = new File(config);
         amqpBroker = new AMQPBrokerManager(qpidConfig.getAbsolutePath(), port);

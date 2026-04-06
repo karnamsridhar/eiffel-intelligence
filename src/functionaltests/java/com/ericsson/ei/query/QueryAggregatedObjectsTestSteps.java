@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
@@ -38,6 +38,7 @@ import io.cucumber.java.en.Then;
 @Ignore
 @TestPropertySource(properties = {
         "spring.data.mongodb.database: QueryAggregatedObjectsTestSteps",
+        "spring.mongodb.database: QueryAggregatedObjectsTestSteps",
         "failed.notifications.collection.name: QueryAggregatedObjectsTestSteps-failedNotifications",
         "rabbitmq.exchange.name: QueryAggregatedObjectsTestSteps-exchange",
         "rabbitmq.queue.suffix: QueryAggregatedObjectsTestSteps" })
@@ -137,7 +138,7 @@ public class QueryAggregatedObjectsTestSteps extends FunctionalTestBase {
                              .addHeader("Accept", CONTENT_TYPE)
                              .setEndpoint(EntryPointConstantsUtils.AGGREGATED_OBJECTS + "/" + documentId).performRequest();
 
-        LOGGER.debug("Response of /aggregated-objects RestApi, Status Code: " + response.getStatusCodeValue()
+        LOGGER.debug("Response of /aggregated-objects RestApi, Status Code: " + response.getStatusCode().value()
                 + "\nResponse: " + response.getBody().toString());
 
         JsonNode jsonNodeResult = objMapper.readValue(response.getBody().toString(),
@@ -149,7 +150,7 @@ public class QueryAggregatedObjectsTestSteps extends FunctionalTestBase {
                                                                  .get("testCaseFinishedEventId")
                                                                  .asText();
 
-        assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+        assertEquals(HttpStatus.OK.value(), response.getStatusCode().value());
         assertEquals(
                 "Failed to compare actual Aggregated Object TestCaseFinishedEventId:\n"
                         + actualTestCaseFinishedEventId
@@ -175,7 +176,7 @@ public class QueryAggregatedObjectsTestSteps extends FunctionalTestBase {
                              .performRequest();
 
         String responseAsString = response.getBody().toString();
-        int responseStatusCode = response.getStatusCodeValue();
+        int responseStatusCode = response.getStatusCode().value();
         LOGGER.debug("Response of /queryAggregatedObject RestApi, Status Code: "
                 + responseStatusCode + "\nResponse: "
                 + responseAsString);
@@ -214,7 +215,7 @@ public class QueryAggregatedObjectsTestSteps extends FunctionalTestBase {
                                   .setBody(formattedQuery)
                                   .performRequest();
 
-            LOGGER.debug("Response of /query RestApi, Status Code: " + response.getStatusCodeValue()
+            LOGGER.debug("Response of /query RestApi, Status Code: " + response.getStatusCode().value()
                     + "\nResponse: "
                     + response.getBody().toString());
 
@@ -226,7 +227,7 @@ public class QueryAggregatedObjectsTestSteps extends FunctionalTestBase {
             String actualAggrObjId = aggrObjResponse.get("id").asText();
             LOGGER.debug("AggregatedObject id from Response: " + actualAggrObjId);
 
-            assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+            assertEquals(HttpStatus.OK.value(), response.getStatusCode().value());
             assertEquals(
                     "Failed to compare actual Aggregated Object Id:\n" + actualAggrObjId
                             + "\nwith expected Aggregated Object Id:\n" + expectedAggrId,
@@ -254,7 +255,7 @@ public class QueryAggregatedObjectsTestSteps extends FunctionalTestBase {
                              .performRequest();
 
         String responseAsString = response.getBody().toString();
-        int responseStatusCode = response.getStatusCodeValue();
+        int responseStatusCode = response.getStatusCode().value();
         LOGGER.debug(
                 "Response of /query RestApi, Status Code: " + responseStatusCode + "\nResponse: "
                         + responseAsString);
@@ -296,7 +297,7 @@ public class QueryAggregatedObjectsTestSteps extends FunctionalTestBase {
                              .performRequest();
 
         String responseAsString = response.getBody().toString();
-        int responseStatusCode = response.getStatusCodeValue();
+        int responseStatusCode = response.getStatusCode().value();
         LOGGER.debug("Response of /failed-notifications RestApi, Status Code: " + responseStatusCode
                 + "\nResponse: " + responseAsString);
 
@@ -308,7 +309,7 @@ public class QueryAggregatedObjectsTestSteps extends FunctionalTestBase {
                                                             .get(0)
                                                             .get("testCaseStartedEventId")
                                                             .asText();
-        assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+        assertEquals(HttpStatus.OK.value(), response.getStatusCode().value());
         assertEquals(
                 "Differences between actual Failed Notification response TestCaseStartedEventId:\n"
                         + actualTestCaseStartedEventId
@@ -337,7 +338,7 @@ public class QueryAggregatedObjectsTestSteps extends FunctionalTestBase {
                              .performRequest();
 
         String responseAsString = response.getBody().toString();
-        int responseStatusCode = response.getStatusCodeValue();
+        int responseStatusCode = response.getStatusCode().value();
         LOGGER.debug("Response of /failed-notifications RestApi, Status Code: " + responseStatusCode
                 + "\nResponse: " + responseAsString);
 
@@ -368,12 +369,12 @@ public class QueryAggregatedObjectsTestSteps extends FunctionalTestBase {
                                   .setBody(query)
                                   .performRequest();
 
-            LOGGER.debug("Response of /query RestApi, Status Code: " + response.getStatusCodeValue()
+            LOGGER.debug("Response of /query RestApi, Status Code: " + response.getStatusCode().value()
                     + "\nResponse: "
                     + response.getBody().toString());
 
             String responseAsString = response.getBody().toString();
-            int responseStatusCode = response.getStatusCodeValue();
+            int responseStatusCode = response.getStatusCode().value();
 
             assertEquals(HttpStatus.OK.value(), responseStatusCode);
             assertEquals("Failed to compare actual response:\n" + responseAsString
@@ -414,12 +415,12 @@ public class QueryAggregatedObjectsTestSteps extends FunctionalTestBase {
                                   .setBody(query)
                                   .performRequest();
 
-            LOGGER.debug("Response of /query RestApi, Status : " + response.getStatusCodeValue()
+            LOGGER.debug("Response of /query RestApi, Status : " + response.getStatusCode().value()
                     + "\nResponse: "
                     + response.getBody().toString());
 
             String responseAsString = response.getBody().toString();
-            int responseStatusCode = response.getStatusCodeValue();
+            int responseStatusCode = response.getStatusCode().value();
 
             assertEquals(HttpStatus.OK.value(), responseStatusCode);
             assertEquals(
@@ -452,7 +453,7 @@ public class QueryAggregatedObjectsTestSteps extends FunctionalTestBase {
                               .setBody(formattedQuery)
                               .performRequest();
 
-        LOGGER.debug("Response of /aggregated-objects/query RestApi, Status Code: " + response.getStatusCodeValue()
+        LOGGER.debug("Response of /aggregated-objects/query RestApi, Status Code: " + response.getStatusCode().value()
                 + "\nResponse: "
                 + response.getBody().toString());
 
@@ -462,7 +463,7 @@ public class QueryAggregatedObjectsTestSteps extends FunctionalTestBase {
 
         JsonNode confidenceLevels = aggrObjResponse.get("confidenceLevels").get(1);
 
-        assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+        assertEquals(HttpStatus.OK.value(), response.getStatusCode().value());
         assertEquals("Failed to retrieve the latest confidence level.", "readyForDelivery",
                 confidenceLevels.get("name").asText());
         assertEquals("Failed to retrieve the latest confidence level.", "SUCCESS",

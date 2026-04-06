@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import org.apache.commons.io.FileUtils;
 import org.bson.BsonDocument;
@@ -53,6 +53,7 @@ import com.mongodb.client.MongoClient;
 
 @TestPropertySource(properties = {
         "spring.data.mongodb.database: QueryServiceTest",
+        "spring.mongodb.database: QueryServiceTest",
         "failed.notifications.collection.name: QueryServiceRESTAPITest-failedNotifications",
         "rabbitmq.exchange.name: QueryServiceTest-exchange",
         "rabbitmq.queue.suffix: QueryServiceTest"})
