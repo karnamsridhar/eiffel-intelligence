@@ -15,7 +15,7 @@ package com.ericsson.ei.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,8 +37,6 @@ import com.ericsson.ei.queryservice.ProcessQueryParams;
 import com.ericsson.ei.utils.ResponseMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Api;
 
 /**
  * This class represents the REST GET mechanism to extract the aggregated data on the basis of the
@@ -46,7 +44,6 @@ import io.swagger.annotations.Api;
  */
 @Component
 @CrossOrigin
-@Api(tags = {"Aggregated objects"}, description = "Fetch aggregated data based on Id")
 public class AggregatedObjectControllerImpl implements AggregatedObjectController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AggregatedObjectControllerImpl.class);
@@ -65,7 +62,6 @@ public class AggregatedObjectControllerImpl implements AggregatedObjectControlle
      * @return ResponseEntity
      */
     @Override
-    @ApiOperation(value = "Get a specific aggregated object", tags = { "Aggregated objects" })
     public ResponseEntity<?> getAggregatedObjectById(@PathVariable final String id,
             final HttpServletRequest httpRequest) {
         ObjectMapper mapper = new ObjectMapper();
@@ -92,7 +88,6 @@ public class AggregatedObjectControllerImpl implements AggregatedObjectControlle
 
     @Override
     @CrossOrigin
-    @ApiOperation(value = "Perform a freestyle query to retrieve aggregated objects", tags = { "Aggregated objects" })
     public ResponseEntity<?> createAggregatedObjectsQuery(@RequestBody final QueryBody body,
             final HttpServletRequest httpRequest) {
         String emptyResponseContent = "[]";

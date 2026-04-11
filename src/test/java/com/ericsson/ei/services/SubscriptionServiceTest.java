@@ -42,7 +42,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.expression.AccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -51,7 +51,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -66,6 +66,7 @@ import static org.junit.Assert.*;
 
 @TestPropertySource(properties = {
         "spring.data.mongodb.database: SubscriptionServiceTest",
+        "spring.mongodb.database: SubscriptionServiceTest",
         "failed.notifications.collection.name: SubscriptionServiceTest-failedNotifications",
         "rabbitmq.exchange.name: SubscriptionServiceTest-exchange",
         "rabbitmq.queue.suffix: SubscriptionServiceTest" })
@@ -96,9 +97,9 @@ public class SubscriptionServiceTest {
     @Autowired
     private MongoDBHandler mongoDBHandler;
 
-    @MockBean
+    @MockitoBean
     private Authentication authentication;
-    @MockBean
+    @MockitoBean
     private SecurityContext securityContext;
 
     private ObjectMapper mapper = new ObjectMapper();

@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Ignore;
@@ -17,8 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.MapPropertySource;
@@ -29,7 +29,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.util.SocketUtils;
+import org.springframework.test.util.TestSocketUtils;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.ericsson.ei.App;
@@ -44,6 +44,7 @@ import io.cucumber.java.en.When;
 @Ignore
 @TestPropertySource(properties = {
         "spring.data.mongodb.database: ScalingAndFailoverSteps",
+        "spring.mongodb.database: ScalingAndFailoverSteps",
         "failed.notifications.collection.name: ScalingAndFailoverSteps-failedNotifications",
         "rabbitmq.exchange.name: ScalingAndFailoverSteps-exchange",
         "rabbitmq.queue.suffix: ScalingAndFailoverSteps" })
@@ -153,6 +154,10 @@ public class ScalingAndFailoverSteps extends FunctionalTestBase {
                     Collections.singletonMap("spring.data.mongodb.database", "ScalingAndFailoverSteps"));
             configurableApplicationContext.getEnvironment().getPropertySources().addFirst(ps);
 
+            PropertySource ps0 = new MapPropertySource("spring.mongodb.database",
+                    Collections.singletonMap("spring.mongodb.database", "ScalingAndFailoverSteps"));
+            configurableApplicationContext.getEnvironment().getPropertySources().addFirst(ps0);
+
             PropertySource ps1 = new MapPropertySource("rabbitmq.exchange.name",
                     Collections.singletonMap("rabbitmq.exchange.name", "ScalingAndFailoverSteps-exchange"));
             configurableApplicationContext.getEnvironment().getPropertySources().addFirst(ps1);
@@ -161,7 +166,7 @@ public class ScalingAndFailoverSteps extends FunctionalTestBase {
                     Collections.singletonMap("rabbitmq.queue.suffix", "ScalingAndFailoverSteps"));
             configurableApplicationContext.getEnvironment().getPropertySources().addFirst(ps2);
 
-            int port = SocketUtils.findAvailableTcpPort();
+            int port = TestSocketUtils.findAvailableTcpPort();
             portList.add(port);
             PropertySource ps3 = new MapPropertySource("server.port", Collections.singletonMap("server.port", port));
             configurableApplicationContext.getEnvironment().getPropertySources().addFirst(ps3);
